@@ -81,12 +81,18 @@ public class MainActivity extends AppCompatActivity {
                 String url = "https://jangbogo-shop-default-rtdb.firebaseio.com/product.json";
                 return OkhttpUtils.get(url);*/
 
-                // post
+                /*// post
                 String url = "https://jangbogo-shop-default-rtdb.firebaseio.com/appLog.json";
                 Map<String, String> body = new HashMap<>();
                 body.put("author", "alanisawesome22");
                 body.put("title", "The Turing Machine33");
-                return OkhttpUtils.post(url, body, MediaType.parse("application/json; charset=utf-8"));
+                return OkhttpUtils.post(url, body, MediaType.parse("application/json; charset=utf-8"));*/
+
+                //delete
+                String url = "https://jangbogo-shop-default-rtdb.firebaseio.com/data.json";
+                return OkhttpUtils.delete(url);
+
+
             } else {
                 return null;
             }
