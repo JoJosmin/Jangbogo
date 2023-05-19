@@ -70,4 +70,17 @@ public class OkhttpUtils {
     // patch
 
     // delete
+    public static String delete(String url) {
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url)
+                .delete()
+                .build();
+        try (Response response = client.newCall(request).execute()) {
+            return response.body().string();
+        } catch (IOException e) {
+            //log.error(e.getMessage(), e);
+            throw new RuntimeException(e);
+        }
+    }
 }
