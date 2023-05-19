@@ -18,7 +18,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
 import java.nio.channels.AsynchronousChannelGroup;
+import java.util.HashMap;
+import java.util.Map;
 
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -61,20 +64,6 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //conditionRef.setValue(editText.getText().toString());
-
-//                OkHttpClient client = new OkHttpClient();
-//                Request request = new Request.Builder()
-//                        .url("https://jangbogo-shop-default-rtdb.firebaseio.com/product.json")
-//                        .get()
-//                        .build();
-//                try (Response response = client.newCall(request).execute()) {
-//                    textView.setText(response.body().string());
-//                    //return response.body().string();
-//                } catch (IOException e) {
-//                    //log.error(e.getMessage(), e);
-//                    throw new RuntimeException(e);
-//                }
                 new MyAsyncTask().execute();
             }
 
@@ -88,8 +77,16 @@ public class MainActivity extends AppCompatActivity {
         protected String doInBackground(Void... voids) {
             int status = NetworkStatus.getConnectivityStatus(getApplicationContext());
             if (status == NetworkStatus.TYPE_MOBILE || status == NetworkStatus.TYPE_WIFI) {
+                /*// get
                 String url = "https://jangbogo-shop-default-rtdb.firebaseio.com/product.json";
-                return OkhttpUtils.get(url);
+                return OkhttpUtils.get(url);*/
+
+                // post
+                String url = "https://jangbogo-shop-default-rtdb.firebaseio.com/appLog.json";
+                Map<String, String> body = new HashMap<>();
+                body.put("author", "alanisawesome22");
+                body.put("title", "The Turing Machine33");
+                return OkhttpUtils.post(url, body, MediaType.parse("application/json; charset=utf-8"));
             } else {
                 return null;
             }

@@ -31,7 +31,7 @@ public class OkhttpUtils {
 
 
     // Post -> 아직 테스트 안함
-    /*public static String post(String url, Map<String, String> body, MediaType mediaType) {
+    public static String post(String url, Map<String, String> body, MediaType mediaType) {
         OkHttpClient client = new OkHttpClient();
         RequestBody requestBody = RequestBody.create(new Gson().toJson(body), mediaType);
         Request request = new Request.Builder()
@@ -46,7 +46,7 @@ public class OkhttpUtils {
         }
     }
 
-    public static String post(String url, Map<String, String> paramHeader, Map<String, String> body, MediaType mediaType) {
+    /*public static String post(String url, Map<String, String> paramHeader, Map<String, String> body, MediaType mediaType) {
 //        if (ObjectUtils.isEmpty(paramHeader)) {
 //            throw new IllegalArgumentException("paramHeader is null");
 //        }
