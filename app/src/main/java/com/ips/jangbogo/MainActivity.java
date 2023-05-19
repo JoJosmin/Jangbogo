@@ -13,6 +13,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.IOException;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 public class MainActivity extends AppCompatActivity {
     private TextView textView;
     private EditText editText;
@@ -51,8 +57,29 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                conditionRef.setValue(editText.getText().toString());
+                //conditionRef.setValue(editText.getText().toString());
+
+//                OkHttpClient client = new OkHttpClient();
+//                Request request = new Request.Builder()
+//                        .url("https://jangbogo-shop-default-rtdb.firebaseio.com/product.json")
+//                        .get()
+//                        .build();
+//                try (Response response = client.newCall(request).execute()) {
+//                    textView.setText(response.body().string());
+//                    //return response.body().string();
+//                } catch (IOException e) {
+//                    //log.error(e.getMessage(), e);
+//                    throw new RuntimeException(e);
+//                }
+
+
+                String url = "https://jangbogo-shop-default-rtdb.firebaseio.com/product.json";
+                String result = OkhttpUtils.get(url);
+//                Assert.assertEquals("1", result);
+                textView.setText(result);
             }
+
+
         });
     }
 }
