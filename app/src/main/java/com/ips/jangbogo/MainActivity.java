@@ -1,10 +1,13 @@
 package com.ips.jangbogo;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -14,6 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
+import java.nio.channels.AsynchronousChannelGroup;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -44,8 +48,8 @@ public class MainActivity extends AppCompatActivity {
         conditionRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String text = dataSnapshot.getValue(String.class);
-                textView.setText(text);
+                //String text = dataSnapshot.getValue(String.class);
+                //textView.setText(text);
             }
 
             @Override
@@ -71,15 +75,35 @@ public class MainActivity extends AppCompatActivity {
 //                    //log.error(e.getMessage(), e);
 //                    throw new RuntimeException(e);
 //                }
-
-
-                String url = "https://jangbogo-shop-default-rtdb.firebaseio.com/product.json";
-                String result = OkhttpUtils.get(url);
-//                Assert.assertEquals("1", result);
-                textView.setText(result);
+                new MyAsyncTask().execute();
             }
 
 
         });
+
     }
+
+    private class MyAsyncTask extends AsyncTask<Void, Void, String>{
+        @Override
+        protected String doInBackground(Void... voids) {
+            int status = NetworkStatus.getConnectivityStatus(getApplicationContext());
+            if (status == NetworkStatus.TYPE_MOBILE || status == NetworkStatus.TYPE_WIFI) {
+                String url = "https://jangbogo-shop-default-rtdb.firebaseio.com/product.json";
+                return OkhttpUtils.get(url);
+            } else {
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            if (result != null) {
+                textView.setText(result);
+            } else {
+                Toast.makeText(getApplicationContext(), "인터넷 연결을 확인해주세요.", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
 }
