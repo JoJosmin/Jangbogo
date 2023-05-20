@@ -89,9 +89,9 @@ public class MainActivity extends AppCompatActivity {
                 return OkhttpUtils.post(url, body, MediaType.parse("application/json; charset=utf-8"));*/
 
                 //patch
-                String url = "https://jangbogo-shop-default-rtdb.firebaseio.com/appLog.json";
+                String url = "https://jangbogo-shop-default-rtdb.firebaseio.com/appLog/-NVok6cm2jzQPajashy7.json";
                 Map<String, String> body = new HashMap<>();
-                body.put("author", "alani");
+                body.put("author", "update!");
                 return OkhttpUtils.patch(url, body, MediaType.parse("application/json; charset=utf-8"));
 
 
