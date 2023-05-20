@@ -68,6 +68,20 @@ public class OkhttpUtils {
     // put -> 안해도 될듯
 
     // patch
+    public static String patch(String url, Map<String, String> body, MediaType mediaType) {
+        OkHttpClient client = new OkHttpClient();
+        RequestBody requestBody = RequestBody.create(new Gson().toJson(body), mediaType);
+        Request request = new Request.Builder()
+                .url(url)
+                .patch(requestBody)
+                .build();
+        try (Response response = client.newCall(request).execute()) {
+            return response.body().string();
+        } catch (IOException e) {
+            //log.error(e.getMessage(), e);
+            throw new RuntimeException(e);
+        }
+    }
 
     // delete
     public static String delete(String url) {
