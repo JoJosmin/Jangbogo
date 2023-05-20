@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
                 String url = "https://jangbogo-shop-default-rtdb.firebaseio.com/product.json";
                 return OkhttpUtils.get(url);*/
                 // get - firestore
-                String url = "https://jangbogo-shop.firebaseio.com/cart/OhEvXwkAPYHLe8fJ9Q34.json";
+                String url = "https://firestore.googleapis.com/v1/projects/jangbogo-shop/databases/(default)/documents/cart/OhEvXwkAPYHLe8fJ9Q34";
                 return OkhttpUtils.get(url);
 
                 /*// post
