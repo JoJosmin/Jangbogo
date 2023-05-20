@@ -10,7 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.app.Application;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -42,10 +45,18 @@ public class MainActivity extends AppCompatActivity {
     private TextView textView;
     private EditText editText;
     private Button button;
+    private FirebaseFirestore secondaryFirestore;
+    private FirebaseFirestore db;
 
     //DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
     //DatabaseReference conditionRef = mRootRef.child("data");
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    // 추가 Firestore 인스턴스 사용
+    FirebaseOptions options = new FirebaseOptions.Builder()
+            .setApplicationId("1:374943218129:android:87622e9ac90f089fdc88f0")
+            .setProjectId("jangbogo-app")
+            .setDatabaseUrl("https://jangbogo-app.firebaseio.com")
+            .build();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +66,10 @@ public class MainActivity extends AppCompatActivity {
         textView = (TextView) findViewById(R.id.textView);
         editText = (EditText) findViewById(R.id.editText);
         button = (Button) findViewById(R.id.button);
+        
+        FirebaseApp.initializeApp(getApplicationContext(), options, "secondary");
+        secondaryFirestore = FirebaseFirestore.getInstance(FirebaseApp.getInstance("secondary"));
+        db= FirebaseFirestore.getInstance();
     }
 
     @Override
@@ -102,8 +117,28 @@ public class MainActivity extends AppCompatActivity {
                 //final List<Object> list = new ArrayList<>();
                 //final String[] str = {""};
 
-                db.collection("cart")
+                /*db.collection("cart")
                         .whereEqualTo("memberID", "a;lssdf")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Log.d(TAG, document.getId() + " => " + document.getData());
+                                        //Map<String, Object> res = new HashMap<>();
+                                        //res.put(document.getId(), document.getData());
+                                    }
+                                } else {
+                                    Log.d(TAG, "Error getting documents: ", task.getException());
+                                }
+                            }
+                        });
+                //return res.get(str).toString();
+                return "굿한번해~";*/
+
+                secondaryFirestore.collection("log")
+                        .whereEqualTo("user", "sdfsdf")
                         .get()
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
