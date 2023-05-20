@@ -1,25 +1,36 @@
 package com.ips.jangbogo;
 
+import static android.content.ContentValues.TAG;
+
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
 import java.nio.channels.AsynchronousChannelGroup;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.MediaType;
@@ -82,9 +93,34 @@ public class MainActivity extends AppCompatActivity {
                 /*// get
                 String url = "https://jangbogo-shop-default-rtdb.firebaseio.com/product.json";
                 return OkhttpUtils.get(url);*/
+
                 // get - firestore
-                String url = "https://firestore.googleapis.com/v1/projects/jangbogo-shop/databases/(default)/documents/cart/OhEvXwkAPYHLe8fJ9Q34";
-                return OkhttpUtils.get(url);
+                //String url = "https://firestore.googleapis.com/v1/projects/jangbogo-shop/databases/(default)/documents/cart/OhEvXwkAPYHLe8fJ9Q34";
+                //return OkhttpUtils.get(url);
+
+                //Query query = db.collection("cart").whereEqualTo("memberID", "sdfasdfa");
+                //final List<Object> list = new ArrayList<>();
+                //final String[] str = {""};
+
+                db.collection("cart")
+                        .whereEqualTo("memberID", "a;lssdf")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Log.d(TAG, document.getId() + " => " + document.getData());
+                                        //Map<String, Object> res = new HashMap<>();
+                                        //res.put(document.getId(), document.getData());
+                                    }
+                                } else {
+                                    Log.d(TAG, "Error getting documents: ", task.getException());
+                                }
+                            }
+                        });
+                //return res.get(str).toString();
+                return "굿한번해~";
 
                 /*// post
                 String url = "https://jangbogo-shop-default-rtdb.firebaseio.com/appLog.json";
