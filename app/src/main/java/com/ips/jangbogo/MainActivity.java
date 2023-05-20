@@ -13,6 +13,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -31,8 +32,9 @@ public class MainActivity extends AppCompatActivity {
     private EditText editText;
     private Button button;
 
-    DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
-    DatabaseReference conditionRef = mRootRef.child("data");
+    //DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+    //DatabaseReference conditionRef = mRootRef.child("data");
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        conditionRef.addValueEventListener(new ValueEventListener() {
+        /*conditionRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //String text = dataSnapshot.getValue(String.class);
@@ -59,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });
+        });*/
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,6 +82,9 @@ public class MainActivity extends AppCompatActivity {
                 /*// get
                 String url = "https://jangbogo-shop-default-rtdb.firebaseio.com/product.json";
                 return OkhttpUtils.get(url);*/
+                // get - firestore
+                String url = "https://jangbogo-shop.firebaseio.com/cart/OhEvXwkAPYHLe8fJ9Q34.json";
+                return OkhttpUtils.get(url);
 
                 /*// post
                 String url = "https://jangbogo-shop-default-rtdb.firebaseio.com/appLog.json";
@@ -88,12 +93,12 @@ public class MainActivity extends AppCompatActivity {
                 body.put("title", "The Turing Machine33");
                 return OkhttpUtils.post(url, body, MediaType.parse("application/json; charset=utf-8"));*/
 
-                //patch
+                /*//patch
                 String url = "https://jangbogo-shop-default-rtdb.firebaseio.com/appLog/-NVok6cm2jzQPajashy7.json";
                 Map<String, String> body = new HashMap<>();
                 body.put("author", "update!");
                 return OkhttpUtils.patch(url, body, MediaType.parse("application/json; charset=utf-8"));
-
+*/
 
                 /*//delete
                 String url = "https://jangbogo-shop-default-rtdb.firebaseio.com/data.json";
