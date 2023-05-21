@@ -30,6 +30,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.nio.channels.AsynchronousChannelGroup;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -143,18 +144,31 @@ public class MainActivity extends AppCompatActivity {
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                // 반환값이 여러개일 경우 (Task 사용 시) List 선언
+                                List list = new ArrayList();
+
                                 if (task.isSuccessful()) {
+                                    // 반환값의 개수만큼 돌리기
                                     for (QueryDocumentSnapshot document : task.getResult()) {
-                                        Log.d(TAG, document.getId() + " => " + document.getData());
-                                        //Map<String, Object> res = new HashMap<>();
-                                        //res.put(document.getId(), document.getData());
+                                        //Log.d(TAG, document.getId() + " => " + document.getData());
+
+                                        // 데이터를 그대로 맵에 대입
+                                        Map map = document.getData();
+                                        // 위 코드랑 똑같은 거 (필요없는 코드임)
+                                        /*for (Map.Entry<String, Object> entry : document.getData().entrySet()){
+                                            map.put(entry.getKey(), entry.getValue());
+                                        }*/
+                                        // 문서명인 key도 맵에 추가
+                                        map.put("key", document.getId());
+                                        // 리스트에 추가
+                                        list.add(map);
                                     }
+                                    // Task(배열)일 경우 포문 밖인 이 곳에서 처리할 것
                                 } else {
                                     Log.d(TAG, "Error getting documents: ", task.getException());
                                 }
                             }
                         });
-                //return res.get(str).toString();
                 return "굿한번해~";
 
                 /*// post
